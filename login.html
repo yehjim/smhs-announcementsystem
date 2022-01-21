@@ -38,14 +38,13 @@
         />
         <input
           v-model="password"
-          type="text"
+          type="password"
           placeholder="密碼"
           class="form-control"
-          id="basic-url"
           aria-describedby="basic-addon3"
         />
-        <button @click="login" type="button" class="btn btn-primary">
-          登入
+        <button @click="login" type="button" class="btn btn-outline-primary" :class="{active:btnclass}">
+          {{status}}
         </button>
       </div>
     </div>
@@ -56,9 +55,13 @@
         data: {
           acc: "",
           password: "",
+          status:'登入',
+          btnclass:false,
         },
         methods: {
           login() {
+            this.status = '登入中...';
+            this.btnclass = true;
             axios({
               method: "get",
               url: "https://script.google.com/macros/s/AKfycbxEHzrVGpiTxtnUlIc2CBU4B71XM3tWLHajsdsKSRX8gA1mfFpWcvfwS7evRmoYENqj/exec",
@@ -71,6 +74,10 @@
                 console.log(response.data);
                 if(response.data == true){
                   window.location.href = "./post.html";
+                }else{
+                  alert('帳號或密碼錯誤')
+                  this.status = '登入',
+                  this.btnclass = false
                 }
               })
               .catch((error) => {

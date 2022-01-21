@@ -69,7 +69,7 @@
             <div class="linkitemwrap">
                 <div class="linkitem" v-for="(item,index) in linkgroup" :key="index">
                     <i @click="delelink(index)" class="bi bi-x-circle-fill"></i>
-                    <span><a :href="linkitem" target="_blank" rel="noopener noreferrer">相關連結</a></span>
+                    <span><a v-bind:href="item" target="_blank" rel="noopener noreferrer">相關連結</a></span>
                 </div>
             </div>
 

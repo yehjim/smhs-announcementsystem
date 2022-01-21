@@ -1,0 +1,68 @@
+.topcontroll{
+    width: 50%;
+    display: flex;
+    margin: auto;
+    margin-top: 100px;
+    input{
+        margin-right: 30px;
+    }
+}
+.datewrap{
+    width: 50%;
+    margin: auto;
+    margin-top: 30px;
+    .datepicker{
+        width: 500px;
+    }
+}
+.linkwrap{
+    width: 50%;
+    margin: auto;
+    margin-top: 30px;
+    .linkitemwrap{
+        display: flex;
+        padding-top: 10px;
+        .linkitem{
+           
+            width: 150px;
+            height: 25px;
+            border-radius: 3px;
+            margin-right: 10px;
+            
+            overflow: hidden;
+            text-overflow: ellipsis;
+            background-color: #0d6efd;
+            color: white;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            i{
+                font-weight: bold;
+                font-size: 16px;
+                margin-right: 10px;
+                margin-left: 20px;
+                cursor: pointer;
+            }
+            a{
+                text-decoration: none;
+                color: white;
+                
+            }
+            
+        }
+    }
+    
+}
+.form-floating{
+    width: 50%;
+    margin: auto;
+    margin-top: 50px;
+}
+.submitwrap{
+    
+    width: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}

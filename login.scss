@@ -1,0 +1,22 @@
+.title{
+    margin: auto;
+    width: 25%;
+    text-align: center;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    img{
+        width: 150px;
+    }
+}
+.loginwrap{
+    width: 25%;
+    margin: auto;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    input{
+        margin-bottom: 50px;
+    }
+}

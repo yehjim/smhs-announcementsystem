@@ -11,6 +11,24 @@
   margin-right: 30px;
 }
 
+.catawrap {
+  width: 50%;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.catawrap a {
+  width: 100%;
+}
+
+.catawrap ul {
+  width: 100%;
+}
+
+.catawrap ul li {
+  text-align: center;
+}
+
 .datewrap {
   width: 50%;
   margin: auto;

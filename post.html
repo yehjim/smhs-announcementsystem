@@ -39,6 +39,20 @@
             </div>
 
         </div>
+        <div class="catawrap">
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    {{cata}}
+                </a>
+    
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li v-for="(item,index) in catagroup" :key="index" class="dropdown-item" v-model="unit"
+                        @click="changecate(item)">{{item}}</a></li>
+                </ul>
+            </div>
+        </div>
+        
         <div class="datewrap">
 
             <div class="input-group input-append date" id="weekYear">
@@ -76,15 +90,18 @@
     </div>
     </div>
     <script>
+        var outputdate = ''
         var app = new Vue({
             el: "#app",
             data: {
                 title: '',
                 unit: '各處室',
+                cata:'公告分類',
                 date: '',
                 content: '',
                 piclink: '',
                 unitgroup: ['校長室', '教務處', '總務處', '學務處', '輔導室', '人事室', '會計室', '圖書館', '國中部'],
+                catagroup:['校務公告','學校榮譽','獎助學金','教師研習','校外活動','下載資料','教師研習心得','升學資訊','政令宣導'],
                 linkgroup: [],
                 linkitem: '',
                 postlinkgroup: ''
@@ -93,7 +110,9 @@
                 changeunit(item) {
                     this.unit = item;
                 },
-                
+                changecate(item){
+                    this.cata = item
+                },
                 delelink(index) {
                     console.log(index)
                     this.linkgroup.splice(index, 1)
@@ -121,17 +140,16 @@
 
                 },
                 submit() {
-
-
-                    console.log(this.postlinkgroup)
-                    console.log(this.date)
+                    console.log(outputdate);
+                    
                     axios({
                             method: "get",
-                            url: "https://script.google.com/macros/s/AKfycbyCgRZC36m0RQ5aRPXrA_aiPgbNOzxALfL_kUTG3ZDqWQvRd6TFoD32NZmEJexEAsi5/exec",
+                            url: "https://script.google.com/macros/s/AKfycbwZB_juz4HIRhug3v3bxmCvTR1YWG5qYx7QUMdkG-W-PiTnVrorsBKsHtn7UKvEH82A/exec",
                             params: {
                                 title: this.title,
                                 unit: this.unit,
-                                date: this.date,
+                                date: outputdate,
+                                cata:this.cata,
                                 content: this.content,
                                 linkgroup: this.postlinkgroup,
                                 piclink: this.piclink
@@ -139,6 +157,13 @@
                         })
                         .then((response) => {
                             console.log(response.data);
+                            alert('新增公告成功')
+                            this.title = '';
+                            this.unit = '各處室';
+                            this.cata = '公告分類';
+                            this.content = '';
+                            this.linkgroup = '';
+                            this.piclink = '';
                         })
                         .catch((error) => {
                             console.error(error);
@@ -153,9 +178,8 @@
                     minViewMode: "month"
                 });
                 $("#weekYear").on("changeDate", function (event) {
-                   let datestring = event.date.getFullYear()+'-'+(event.date.getMonth()+1)+'-'+event.date.getDate()
-                   this.date = datestring
-                   console.log(this.date)
+                    outputdate = event.date.getFullYear()+'-'+(event.date.getMonth()+1)+'-'+event.date.getDate()
+                  
                 });
             },
         });

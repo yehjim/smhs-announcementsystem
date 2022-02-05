@@ -99,6 +99,10 @@ h2 {
   margin-top: 50px;
 }
 
+.form-floating .CodeMirror {
+  height: 300px;
+}
+
 .submitwrap {
   width: 50%;
   margin: auto;

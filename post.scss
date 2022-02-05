@@ -78,8 +78,12 @@ h2{
 }
 .form-floating{
     width: 50%;
+    
     margin: auto;
     margin-top: 50px;
+    .CodeMirror {
+        height: 300px;
+    }
 }
 .submitwrap{
     

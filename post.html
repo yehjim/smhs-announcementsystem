@@ -80,7 +80,7 @@
         </div>
 
         <div class="form-floating">
-            <textarea id="MyID"></textarea>
+            <textarea id="simplemde"></textarea>
 
         </div>
         <div class="submitwrap">
@@ -95,6 +95,177 @@
     <script>
         var simplemde
         var outputdate = ''
+        var Toolbar_Base = {
+            "bold": {
+                name: "bold",
+                action: SimpleMDE.toggleBold,
+                className: "fa fa-bold",
+                title: "粗體"
+            },
+            "italic": {
+                name: "italic",
+                action: SimpleMDE.toggleItalic,
+                className: "fa fa-italic",
+                title: "斜體"
+            },
+            "strikethrough": {
+                name: "strikethrough",
+                action: SimpleMDE.toggleStrikethrough,
+                className: "fa fa-strikethrough",
+                title: "Strikethrough"
+            },
+            "heading": {
+                name: "heading",
+                action: SimpleMDE.toggleHeadingSmaller,
+                className: "fa fa-header",
+                title: "Heading"
+            },
+            "heading-smaller": {
+                name: "heading-smaller",
+                action: SimpleMDE.toggleHeadingSmaller,
+                className: "fa fa-header fa-header-x fa-header-smaller",
+                title: "Smaller Heading"
+            },
+            "heading-bigger": {
+                name: "heading-bigger",
+                action: SimpleMDE.toggleHeadingBigger,
+                className: "fa fa-header fa-header-x fa-header-bigger",
+                title: "Bigger Heading"
+            },
+            "heading-1": {
+                name: "heading-1",
+                action: SimpleMDE.toggleHeading1,
+                className: "fa fa-header fa-header-x fa-header-1",
+                title: "H1"
+            },
+            "heading-2": {
+                name: "heading-2",
+                action: SimpleMDE.toggleHeading2,
+                className: "fa fa-header fa-header-x fa-header-2",
+                title: "H2"
+            },
+            "heading-3": {
+                name: "heading-3",
+                action: SimpleMDE.toggleHeading3,
+                className: "fa fa-header fa-header-x fa-header-3",
+                title: "H3"
+            },
+            "separator-1": {
+                name: "separator-1"
+            },
+            "code": {
+                name: "code",
+                action: SimpleMDE.toggleCodeBlock,
+                className: "fa fa-code",
+                title: "新增程式碼"
+            },
+            "quote": {
+                name: "quote",
+                action: SimpleMDE.toggleBlockquote,
+                className: "fa fa-quote-left",
+                title: "引用"
+            },
+            "unordered-list": {
+                name: "unordered-list",
+                action: SimpleMDE.toggleUnorderedList,
+                className: "fa fa-list-ul",
+                title: "項目符號清單"
+            },
+            "ordered-list": {
+                name: "ordered-list",
+                action: SimpleMDE.toggleOrderedList,
+                className: "fa fa-list-ol",
+                title: "編號清單"
+            },
+            "clean-block": {
+                name: "clean-block",
+                action: SimpleMDE.cleanBlock,
+                className: "fa fa-eraser fa-clean-block",
+                title: "Clean block"
+            },
+            "separator-2": {
+                name: "separator-2"
+            },
+            "link": {
+                name: "link",
+                action: SimpleMDE.drawLink,
+                className: "fa fa-link",
+                title: "插入連結"
+            },
+            "image": {
+                name: "image",
+                action: SimpleMDE.drawImage,
+                className: "fa fa-picture-o",
+                title: "插入圖片"
+            },
+            "table": {
+                name: "table",
+                action: SimpleMDE.drawTable,
+                className: "fa fa-table",
+                title: "插入表格"
+            },
+            "horizontal-rule": {
+                name: "horizontal-rule",
+                action: SimpleMDE.drawHorizontalRule,
+                className: "fa fa-minus",
+                title: "插入水平線"
+            },
+            "separator-3": {
+                name: "separator-3"
+            },
+            "preview": {
+                name: "preview",
+                action: SimpleMDE.togglePreview,
+                className: "fa fa-eye no-disable",
+                title: "預覽"
+            },
+            "side-by-side": {
+                name: "side-by-side",
+                //SimpleMDE.toggleFullScreen
+                action: SimpleMDE.toggleSideBySide,
+                className: "fa fa-columns no-disable no-mobile",
+                title: "切換至 左右預覽模式"
+            },
+            "fullscreen": {
+                name: "fullscreen",
+                action: SimpleMDE.toggleFullScreen,
+                className: "fa fa-arrows-alt no-disable no-mobile",
+                title: "切換至 全螢幕模式"
+            },
+            "separator-4": {
+                name: "separator-4"
+            },
+            "guide": {
+                name: "guide",
+                action: "https://simplemde.com/markdown-guide",
+                className: "fa fa-question-circle",
+                title: "Markdown Guide"
+            },
+            "separator-5": {
+                name: "separator-5"
+            },
+            "undo": {
+                name: "undo",
+                action: SimpleMDE.undo,
+                className: "fa fa-undo no-disable",
+                title: "復原"
+            },
+            "redo": {
+                name: "redo",
+                action: SimpleMDE.redo,
+                className: "fa fa-repeat no-disable",
+                title: "取消復原"
+            }
+        }
+        var Toolbar_br = {
+            name: "br",
+            title: "強迫換行",
+            className: "fa fa-level-down fa-rotate-90",
+            action: function (editor) {
+                var cm = editor.codemirror;
+                cm.replaceSelection("<br />");
+            }
+        };
         var app = new Vue({
             el: "#app",
             data: {
@@ -102,6 +273,7 @@
                 unit: '各處室',
                 cata: '公告分類',
                 date: '',
+                htmlcontent:'',
                 content: '',
                 piclink: '',
                 unitgroup: ['校長室', '教務處', '總務處', '學務處', '輔導室', '人事室', '會計室', '圖書館', '國中部'],
@@ -154,7 +326,7 @@
                                 unit: this.unit,
                                 date: outputdate,
                                 cata: this.cata,
-                                content: simplemde.value(),
+                                content: this.htmlcontent,
                                 linkgroup: this.postlinkgroup,
                                 piclink: this.piclink
                             },
@@ -172,18 +344,41 @@
                         .catch((error) => {
                             console.error(error);
                         });
-                    console.log(simplemde.options.previewRender(simplemde.value()))
+                    
                 }
             },
             mounted() {
                 simplemde = new SimpleMDE({
-                    element: document.getElementById("MyID"),
-                    toolbar: ["bold", "italic", "heading-1", "heading-2", "heading-3", "|",
-                        "ordered-list", "quote", "preview"
-                    ],
-                    styleSelectedText: false,
-                    spellChecker: false,
+                    el: document.getElementById('simplemde'),
+                    autofocus: false,
                     status: false,
+                    spellChecker: false,
+                    renderingConfig: {
+                        codeSyntaxHighlighting: true,
+                        highlightingTheme: 'atom-one-light'
+                    },
+                    lineWrapping: true,
+                    placeholder: '在此輸入公告內容',
+                    toolbar: [Toolbar_Base['heading'],
+                        Toolbar_Base['bold'],
+                        Toolbar_Base['italic'],
+                        Toolbar_Base['link'], Toolbar_Base['image'],
+                        "|", Toolbar_Base['ordered-list'],
+                        Toolbar_Base['unordered-list'],
+                        Toolbar_Base['horizontal-rule'], "|",
+                        Toolbar_Base['undo'],
+                        Toolbar_Base['redo'],
+                        "|",
+                        Toolbar_Base['preview'],
+                        Toolbar_Base['fullscreen'],
+                        Toolbar_br,
+                    ]
+                })
+                simplemde.value(this.editeventdescribe)
+                simplemde.codemirror.on("change", () => {
+                    this.content = simplemde.value()
+                    // simplemde.markup(simplemde.value())
+                    this.htmlcontent = SimpleMDE.prototype.markdown(this.content)
                 });
                 $('#weekYear').datepicker({
                     todayHighlight: true,
